@@ -1,0 +1,26 @@
+name: Mobile
+on:
+  workflow_dispatch:  
+  #schedule:
+  #  - cron: '00 11 * * *'  # At 11:00 UTC every day. (5am Denver time) 
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Lighthouse
+        run: |
+          npm install -g @unlighthouse/cli puppeteer
+          npm install
+          npm run testm
+          npm run summary
+
+      - name: Commit results
+        run: |
+          git config --global user.name scott-frcc
+          git config --global user.email scott.davis@frontrange.edu
+          git add .
+          git commit -m "Mobile Lighthouse audit data"
+          git push
