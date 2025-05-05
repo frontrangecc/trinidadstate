@@ -1,0 +1,23 @@
+name: Summary
+on:
+    push:
+        branches: [ "main" ]
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Summarize Lighthouse audit data
+        run: |
+          npm install
+          npm run summary
+
+      - name: Commit results
+        run: |
+          git config --global user.name scott-frcc
+          git config --global user.email scott.davis@frontrange.edu
+          git add .
+          git commit -m "Updated summaries for Lighthouse audit data"
+          git push
